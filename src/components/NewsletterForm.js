@@ -6,9 +6,9 @@ function NewsletterForm() {
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
   const [interests, setInterests] = useState({
-    interest1: false,
-    interest2: false,
-    interest3: false,
+    Coding: false,
+    Music: false,
+    Traveling: false,
   });
   const [message, setMessage] = useState('');
 
@@ -16,32 +16,48 @@ function NewsletterForm() {
     event.preventDefault();
     const selectedInterests = Object.entries(interests)
       .filter(([key, value]) => value)
-      .map(([key]) => key.replace('interest', 'Interest '));
-    setMessage(`Thank you for signing up, ${name}! Interests: ${selectedInterests.join(', ')}`);
+      .map(([key]) => key);
+    setMessage(`Form submitted successfully! Name: ${name}, Email: ${email}, Interests: ${selectedInterests.join(', ')}`);
   };
 
   return (
-    <form onSubmit={handleSubmit}>
-      <FormInput label="Name:" type="text" value={name} onChange={(e) => setName(e.target.value)} />
-      <FormInput label="Email:" type="email" value={email} onChange={(e) => setEmail(e.target.value)} />
-      <InterestCheckbox
-        label="User Experience (UX) Design"
-        checked={interests.interest1}
-        onChange={() => setInterests((prev) => ({ ...prev, interest1: !prev.interest1 }))}
-      />
-      <InterestCheckbox
-        label="Responsive Design"
-        checked={interests.interest2}
-        onChange={() => setInterests((prev) => ({ ...prev, interest2: !prev.interest2 }))}
-      />
-      <InterestCheckbox
-        label="JavaScript Frameworks"
-        checked={interests.interest3}
-        onChange={() => setInterests((prev) => ({ ...prev, interest3: !prev.interest3 }))}
-      />
-      <button type="submit">Submit</button>
-      {message && <p>{message}</p>}
-    </form>
+    <div>
+      <h2>Newsletter Signup</h2>
+      <form onSubmit={handleSubmit}>
+        <FormInput
+          label="Name:"
+          type="text"
+          value={name}
+          onChange={(e) => setName(e.target.value)}
+        />
+        <FormInput
+          label="Email:"
+          type="email"
+          value={email}
+          onChange={(e) => setEmail(e.target.value)}
+        />
+        <fieldset>
+          <legend>Interests:</legend>
+          <InterestCheckbox
+            label="Coding"
+            checked={interests.Coding}
+            onChange={() => setInterests((prev) => ({ ...prev, Coding: !prev.Coding }))}
+          />
+          <InterestCheckbox
+            label="Music"
+            checked={interests.Music}
+            onChange={() => setInterests((prev) => ({ ...prev, Music: !prev.Music }))}
+          />
+          <InterestCheckbox
+            label="Traveling"
+            checked={interests.Traveling}
+            onChange={() => setInterests((prev) => ({ ...prev, Traveling: !prev.Traveling }))}
+          />
+        </fieldset>
+        <button type="submit">Submit</button>
+        {message && <p>{message}</p>}
+      </form>
+    </div>
   );
 }
 
